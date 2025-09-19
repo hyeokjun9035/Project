@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        /* ===== 전체 레이아웃 ===== */
+        body {
+            margin: 30px auto;
+            padding: 0;
+            background: #f7f9f8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ===== 상단 고정 헤더 ===== */
+        .header {
+            position: relative;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        #name {
+            position: absolute;
+            font-size: 25px;
+            color: #2e5d50;
+            top: -20px;
+            right: 100px;
+        }
+
+        #logout button {
+            position: absolute;
+            font-size: 20px;
+            background: linear-gradient(90deg, #7fb5a8, #5d9f91);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 18px;
+            cursor: pointer;
+            top: -25px;
+            right: -40px;
+        }
+
+        #logout button:hover {
+            background: linear-gradient(90deg, #6aa194, #4b877b);
+        }
+
+        /* ===== 상단 로고 영역 ===== */
+        #home {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        #home a {
+            color: #2e4d43;
+            text-decoration: none;
+        }
+
+        #home a:hover {
+            text-decoration: none;
+        }
+
+        /* ===== 메인 콘텐츠 박스 ===== */
+        #ap {
+            max-width: 1100px;
+            margin: 50px auto 100px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            padding: 60px 80px;
+        }
+
+        /* ===== 글쓰기 버튼 ===== */
+        #a {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        #a button {
+            background: linear-gradient(90deg, #7fb5a8, #5d9f91);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 25px;
+            cursor: pointer;
+        }
+
+        #a button:hover {
+            background: linear-gradient(90deg, #6aa194, #4b877b);
+        }
+
+        /* ===== 게시판 테이블 ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 18px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        th {
+            background-color: #e6f2ef;
+            color: #2e4d43;
+            font-weight: bold;
+            border-bottom: 2px solid #cdded8;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fdfc;
+        }
+
+        tr:hover {
+            background: #f0f8f6;
+        }
+
+        td a {
+            color: #2e7d6d;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== 검색 영역 ===== */
+        #search {
+            margin-top: 40px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #search select {
+            width: 120px;
+            height: 45px;
+            border: 1px solid #cdded8;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        #search input {
+            width: 400px;
+            height: 45px;
+            border: 1px solid #cdded8;
+            border-radius: 8px;
+            padding: 0 15px;
+        }
+
+        #search button {
+            height: 45px;
+            padding: 0 30px;
+            background: #5d9f91;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #search button:hover {
+            background: #4b877b;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="header">
+            <span id="name"></span>
+            <span id="logout">
+                <button v-if="login" @click="fnLogout">로그아웃</button>
+                <button v-else @click="fnLogin">로그인</button>
+            </span>
+        </div>
+        <div id="home" style="font-size: 50px; text-align: center; font-weight: bold;">
+            <a href="Project_Homepage.html"><img src="mark.png" width="50" height="50" style="margin: -5px -5px;">
+                좋은 요양원</a>
+        </div>
+        <div id="ap">
+            <div id="a">
+                <button @click="fnAdd">글쓰기</button>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                    </tr>
+                    <tr v-for="item in list">
+                        <td>{{item.BOARDNO}}</td>
+                        <td>
+                            <a href="javascript:;" @click="fnView(item.BOARDNO)">{{item.TITLE}}</a>
+                        </td>
+                        <td>
+                            <span v-if="status == 'A'"><a href="javascript:;" @click="fnUserInfo(item.USERID)">{{item.NAME}}</a></span>
+                            <span v-else>{{item.NAME}}</span>
+                        </td>
+                        <td>{{item.CTIME}}</td>
+                        <td>{{item.CNT}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="search">
+                <select v-model="option">
+                    <option value="all">:: 전체 ::</option>
+                    <option value="title">:: 제목 ::</option>
+                    <option value="id">:: 작성자 ::</option>
+                </select>
+                <input type="text" @keyup.enter="fnList" v-model="keyword" placeholder="검색어를 입력해주세요.">
+                <button @click="fnList">검색</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+                list: [],
+                option: "all",
+                keyword: "",
+                status: "",
+                login: false,
+                name: "",
+                userId : ""
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnList: function () {
+                let self = this;
+                let param = {
+                    option: self.option,
+                    keyword: self.keyword
+                };
+                $.ajax({
+                    url: "http://localhost:3009/user/list",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+                        console.log(data);
+                        self.list = data.list;
+                    }
+                });
+            },
+
+            fnView: function (boardNo) {
+                location.href = "Project_Board_View.html?boardNo=" + boardNo;
+            },
+
+            fnAdd: function () {
+                let self = this;
+                console.log(self.status);
+                if (self.status != null) {
+                    location.href = "Project_Board_Add.html";
+                } else {
+                    alert("로그인 후 작성해주세요.");
+                    location.href = "Project_Login.html";
+                }
+            },
+            fnLogout: function () {
+                let self = this;
+                sessionStorage.removeItem("sessionId");
+                sessionStorage.removeItem("sessionStatus");
+                sessionStorage.removeItem("sessionName");
+                alert("로그아웃 되었습니다.");
+                self.login = false;
+                location.href = "Project_Homepage.html";
+            },
+            fnLogin: function () {
+                location.href = "Project_Login.html";
+            },
+
+            fnUserInfo : function(userId){
+                window.open(`Project_Info.html?userId=${userId}`, "user", "with=500, height=500");
+            }
+
+        }, // methods
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+            let self = this;
+            self.sessionId = sessionStorage.getItem("sessionId");
+            self.status = sessionStorage.getItem("sessionStatus");
+            self.name = sessionStorage.getItem("sessionName");
+
+            if (self.sessionId && self.status) {
+                self.login = true;
+            } else {
+                self.login = false;
+            }
+
+            if (self.name) {
+                let title = document.querySelector("#name");
+                if (title) {
+                    title.innerText = self.name + "님";
+                }
+            }
+            self.fnList();
+
+        }
+    });
+
+    app.mount('#app');
+</script>

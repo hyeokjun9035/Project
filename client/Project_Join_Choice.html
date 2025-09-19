@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            margin: 100px;
+            padding: 0;
+            background: #f7f9f8;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        #img1 {
+            width: 300px;
+            height: 300px;
+            border: 0px solid black;
+            margin: 10px 10px;
+            background-image: url("family.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            float: left;
+            display: flex;
+            /* flexbox 사용 */
+            align-items: flex-end;
+            /* 세로축 아래로 정렬 */
+            justify-content: center;
+            /* 가로축 가운데 정렬 */
+            font-size: 20px;
+            font-weight: bold;
+            color: rgb(25, 24, 24);
+            border: none;
+            cursor: pointer;
+        }
+
+        #img2 {
+            width: 300px;
+            height: 300px;
+            border: 0px solid black;
+            margin: 10px 10px;
+            background-image: url("care.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            float: left;
+            display: flex;
+            /* flexbox 사용 */
+            align-items: flex-end;
+            /* 세로축 아래로 정렬 */
+            justify-content: center;
+            /* 가로축 가운데 정렬 */
+            font-size: 20px;
+            font-weight: bold;
+            color: rgb(25, 24, 24);
+            border: none;
+            cursor: pointer;
+        }
+
+        #img1:hover,
+        #img2:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        #home a {
+            color: #000;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="home" style="font-size: 50px; text-align: center; font-weight: bold;">
+            <a href="Project_Homepage.html">
+                <img src="mark.png" width="50" height="50" style="margin: -5px -5px;">
+                좋은 요양원
+            </a>
+        </div>
+        <div>
+            <a href="Project_User_Join.html"><button id="img1">가족 회원가입</button></a>
+            <a href="Project_Caregiver_Join.html"><button id="img2">요양보호사 회원가입</button></a>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnList: function () {
+                let self = this;
+                let param = {};
+                $.ajax({
+                    url: "http://localhost:3009/",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+
+                    }
+                });
+            }
+        }, // methods
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+            let self = this;
+        }
+    });
+
+    app.mount('#app');
+</script>

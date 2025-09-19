@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <style>
+        body {
+            margin: 30px auto;
+            padding: 0;
+            background: #f7f9f8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #editor {
+            height: 600px;
+            width: 800px;
+            margin: 0px auto;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 5px 10px;
+            text-align: center;
+        }
+
+        .ql-toolbar {
+            width: 800px;
+            background-color: #f0f8f8;
+        }
+
+        .ql-snow .ql-picker.ql-header {
+            width: 200px;
+        }
+
+        .ql-snow .ql-picker {
+            color: #444;
+            display: inline-block;
+            font-size: 30px;
+            font-weight: bold;
+            height: 35px;
+            position: relative;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .ql-snow.ql-toolbar button,
+        .ql-snow .ql-toolbar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            height: 30px;
+            padding: 0px 0px;
+            width: 35px;
+        }
+
+
+        #main {
+            width: 800px;
+            height: 120px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            float: left;
+        }
+
+        #title input {
+            width: 750px;
+            height: 40px;
+            border-radius: 5px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        select {
+            width: 375px;
+            height: 40px;
+            border-radius: 5px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            margin: 10px 2px;
+        }
+
+        #write {
+            top: 10px;
+            position: relative;
+            font-size: 35px;
+            display: flex;
+            justify-content: space-between;
+            /* 글씨는 왼쪽, 버튼은 오른쪽 */
+            align-items: flex-start;
+            /* 세로 가운데 정렬 */
+            width: 800px;
+            /* 글쓰기 영역과 동일한 폭 */
+            margin: 20px auto;
+        }
+
+        #add button {
+            position: absolute;
+            top: 10px;
+            right: 70px;
+            font-size: 20px;
+            padding: 5px 15px;
+            border-radius: 8px;
+            border: none;
+            background-color: #4ca3af;
+            color: white;
+            cursor: pointer;
+        }
+
+        #back button {
+            position: absolute;
+            top: 10px;
+            right: 0px;
+            font-size: 20px;
+            padding: 5px 15px;
+            border-radius: 8px;
+            border: none;
+            background-color: #4ca3af;
+            color: white;
+            cursor: pointer;
+        }
+
+        #write button:hover {
+            background-color: #3a8b95;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        /* ===== 상단 고정 헤더 ===== */
+        .header {
+            position: relative;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        #name {
+            position: absolute;
+            font-size: 25px;
+            color: #2e5d50;
+            top: -20px;
+            right: 100px;
+        }
+
+        #logout button {
+            position: absolute;
+            font-size: 20px;
+            background: linear-gradient(90deg, #7fb5a8, #5d9f91);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 18px;
+            cursor: pointer;
+            top: -25px;
+            right: -40px;
+        }
+
+        #logout button:hover {
+            background: linear-gradient(90deg, #6aa194, #4b877b);
+        }
+
+        /* ===== 상단 로고 영역 ===== */
+        #home {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        #home a {
+            color: #2e4d43;
+            text-decoration: none;
+        }
+
+        #home a:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="header">
+            <span id="name"></span>
+            <span id="logout">
+                <button v-if="login" @click="fnLogout">로그아웃</button>
+                <button v-else @click="fnLogin">로그인</button>
+            </span>
+        </div>
+        <div id="home" style="font-size: 50px; text-align: center; font-weight: bold;">
+            <a href="Project_Homepage.html">
+                <img src="mark.png" width="50" height="50" style="margin: -5px -5px;">
+                좋은 요양원
+            </a>
+        </div>
+
+        <div id="write">
+            게시판 글쓰기
+            <span id="add"><button @click="fnSave">등록</button></span>
+            <span id="back"><button @click="fnBack">목록</button></span>
+        </div>
+        <hr>
+        <div id="main">
+            <div>
+                <select>
+                    <option name="kind" value="1" v-model="selectItem">공지사항</option>
+                    <option name="kind" value="2" v-model="selectItem">일지</option>
+                    <option name="kind" value="3" v-model="selectItem">질문게시판</option>
+                </select>
+                <select disabled>
+                    <option>말머리선택</option>
+                </select>
+            </div>
+            <div id="title">
+                <input type="text" placeholder="제목을 입력해주세요." v-model="title">
+            </div>
+        </div>
+    </div>
+    <div id="editor"></div>
+
+</body>
+
+</html>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+                title: "",
+                kind: "",
+                userId: "",
+                contents: "",
+                name: "",
+                selectItem: 1
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnSave: function () {
+                let self = this;
+                let sessionId = sessionStorage.getItem("sessionId");
+                let sessionStatus = sessionStorage.getItem("sessionStatus");
+                let param = {
+                    kind: self.selectItem,
+                    title: self.title,
+                    contents: self.contents
+                };
+                if (sessionStatus == "C") {
+                    param.userId = sessionId;
+                    param.caregiverId = null;
+                    param.status = "C";
+                } else if (sessionStatus == "S") {
+                    param.userId = null;
+                    param.caregiverId = sessionId;
+                    param.status = "S";
+                } else if (sessionStatus == "A") {
+                    param.userId = null;
+                    param.caregiverId = null;
+                    param.status = "A";
+                }
+                $.ajax({
+                    url: "http://localhost:3009/pro/add",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+                        alert("등록되었습니다.");
+                        console.log(data);
+                        location.href = "Project_Board_List.html";
+                    }
+                });
+            },
+
+            fnBack: function () {
+                location.href = "Project_Board_List.html";
+            },
+            fnLogout: function () {
+                let self = this;
+                sessionStorage.removeItem("sessionId");
+                sessionStorage.removeItem("sessionStatus");
+                sessionStorage.removeItem("sessionName");
+                alert("로그아웃 되었습니다.");
+                self.login = false;
+                location.href = "Project_Homepage.html";
+            },
+            fnLogin: function () {
+                location.href = "Project_Login.html";
+            }
+        }, // methods
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+            let self = this;
+            // Quill 에디터 초기화
+            var quill = new Quill('#editor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        ['bold', 'italic', 'underline'],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        ['link', 'image'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            // 에디터 내용이 변경될 때마다 Vue 데이터를 업데이트
+            quill.on('text-change', function () {
+                self.contents = quill.root.innerHTML;
+            });
+
+            self.sessionId = sessionStorage.getItem("sessionId");
+            self.status = sessionStorage.getItem("sessionStatus");
+            self.name = sessionStorage.getItem("sessionName");
+
+            if (self.sessionId && self.status) {
+                self.login = true;
+            } else {
+                self.login = false;
+            }
+
+            if (self.name) {
+                let title = document.querySelector("#name");
+                if (title) {
+                    title.innerText = self.name + "님";
+                }
+            }
+        }
+    });
+
+    app.mount('#app');
+</script>

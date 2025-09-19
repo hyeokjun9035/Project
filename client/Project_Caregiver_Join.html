@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f7f9f8;
+            font-family: 'Noto Sans KR', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        #app {
+            background: #ffffff;
+            padding: 40px 50px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            width: 600px;
+            box-sizing: border-box;
+        }
+
+        #app div {
+            margin-bottom: 18px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 210px;
+            padding: 10px 14px;
+            margin-left: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        #a select,#a input[type="text"]{
+            width: 110px;
+            padding: 10px 14px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        #b select {
+            width: 130px;
+            padding: 10px 14px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+         #b input[type="text"]{
+            width: 170px;
+            padding: 10px 14px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-sizing: border-box;
+            text-align: center;
+         }
+
+        #c select{
+            width: 140px;
+            padding: 10px 14px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        input:focus, select:focus {
+            border: 1px solid #4ca3af;
+            outline: none;
+        }
+
+        button {
+            background: #4ca3af;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            margin-left: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3a8b95;
+            transform: translateY(-2px);
+        }
+
+        /* 회원가입 / 되돌아가기 버튼은 크게 */
+        div:last-child button {
+            width: 48%;
+            padding: 14px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* 보조 버튼 (되돌아가기) 색상 다르게 */
+        div:last-child button:last-child {
+            background: #7bb661;
+        }
+
+        div:last-child button:last-child:hover {
+            background: #689d52;
+        }
+
+        /* 라디오 버튼 (성별) */
+        input[type="radio"] {
+            margin-left: 15px;
+            margin-right: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            요양보호사 회원가입
+        </div>
+        <div>
+            아이디 :
+            <template v-if="checkFlg">
+                <input placeholder="아이디를 입력해주세요." type="text" v-model="careId" disabled>
+            </template>
+            <template v-else>
+                <input placeholder="아이디를 입력해주세요." type="text" v-model="careId">
+            </template>
+            <button @click="fnCheck">중복체크</button>
+        </div>
+        <div>
+            비밀번호 :
+            <input placeholder="비밀번호를 입력해주세요." type="password" v-model="pwd1" @click="pwdCheck">
+        </div>
+        <div>
+            비밀번호 확인 :
+            <input placeholder="비밀번호를 다시 입력해주세요." type="password" v-model="pwd2">
+        </div>
+        <div id="c">
+            병동 :
+            <select v-model="wardNo">
+                <option value="101">:: 가병동101 ::</option>
+                <option value="102">:: 가병동102 ::</option>
+                <option value="201">:: 나병동201 ::</option>
+                <option value="202">:: 나병동202 ::</option>
+            </select>
+        </div>
+        <div>
+            이름 :
+            <input placeholder="이름을 입력해주세요." type="text" v-model="name">
+        </div>
+        <div>
+            생년월일 :
+            <input placeholder="ex) 19960901" type="text" v-model="birth">
+        </div>
+        <div>
+            주소 :
+            <input placeholder="ex) 인천시 미추홀구" type="text" v-model="addr">
+        </div>
+        <div id="a">
+            번호 :
+            <select v-model="option">
+                <option value="010">010</option>
+                <option value="011">011</option>
+                <option value="017">017</option>
+            </select>
+            <template v-if="checkFlgPhone">
+                <input placeholder="번호를" type="text" v-model="phone1" disabled>
+                <input placeholder="입력해주세요." type="text" v-model="phone2" disabled>
+            </template>
+            <template v-else>
+                <input placeholder="번호를" type="text" v-model="phone1">
+                <input placeholder="입력해주세요." type="text" v-model="phone2">
+            </template>
+            <button @click="fnCheck1">중복체크</button>
+        </div>
+        <div id="b">
+            이메일 :
+            <template v-if="checkFlgEmail">
+                <input placeholder="이메일을 입력해주세요." type="text" v-model="idText" disabled>
+            </template>
+            <template v-else>
+                <input placeholder="이메일을 입력해주세요." type="text" v-model="idText">
+            </template>
+            <select v-model="email">
+                <option value="1">직접입력</option>
+                <option value="2">@naver.com</option>
+                <option value="3">@nate.com</option>
+                <option value="4">@hanmail.net</option>
+                <option value="5">@gmail.com</option>
+            </select>
+            <button @click="fnCheck2">중복체크</button>
+        </div>
+        <div>
+            성별 :
+            <input type="radio" name="gender" v-model="gender" value="M">남
+            <input type="radio" name="gender" v-model="gender" value="F">여
+        </div>
+        <div>
+            <button @click="fnAdd">회원가입</button>
+            <button @click="fnBack">되돌아가기</button>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+                careId: "",
+                pwd1: "",
+                pwd2: "",
+                wardMap: {
+                    "101": "가병동101",
+                    "102": "가병동102",
+                    "201": "나병동201",
+                    "202": "나병동202"
+                },
+                name: "",
+                birth: "",
+                addr: "",
+                option: "010",
+                phone1: "",
+                phone2: "",
+                email: "1",
+                idText: "",
+                gender: "",
+                status: "",
+                checkFlg: false,
+                checkFlgEmail: false,
+                checkFlgPhone: false,
+                wardNo: "101",
+                info: {},
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnAdd: function () {
+                let self = this;
+                let pwdCheck = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,24}$/;
+                console.log("입력된 비밀번호: ", self.pwd1);
+                console.log("유효성 검사 결과: ", pwdCheck.test(self.pwd1));
+                if (!self.checkFlg) {
+                    alert("아이디 중복체크를 해주세요.");
+                    return;
+                }
+
+                if (!pwdCheck.test(self.pwd1)) {
+                    alert("비밀번호는 영문+숫자+특수문자를 포함해야 합니다.");
+                    return;
+                }
+                if (self.pwd1 != self.pwd2) {
+                    alert("비밀번호가 다릅니다.");
+                    return;
+                }
+                if (self.name == 0) {
+                    alert('이름은 공란이 될 수 없습니다.');
+                    return;
+                }
+                if (self.birth == 0) {
+                    alert('생년월일은 공란이 될 수 없습니다.');
+                    return;
+                }
+                if (self.addr == 0) {
+                    alert('주소는 공란이 될 수 없습니다.');
+                    return;
+                }
+                if (!self.checkFlgPhone) {
+                    alert('번호를 중복체크를 해주세요.');
+                    return;
+                }
+                if (!self.checkFlgEmail) {
+                    alert("이메일을 중복체크를 해주세요.");
+                    return;
+                }
+                if (self.gender == 0) {
+                    alert('성별은 공란이 될 수 없습니다.');
+                    return;
+                }
+                // 이메일 주소 조합
+                let fullEmail = "";
+                if (self.email == "1") {
+                    fullEmail = self.idText;
+                } else if (self.email == "2") {
+                    fullEmail = self.idText + "@naver.com";
+                } else if (self.email == "3") {
+                    fullEmail = self.idText + "@nate.com";
+                } else if (self.email == "4") {
+                    fullEmail = self.idText + "@hanmail.net";
+                } else if (self.email == "5") {
+                    fullEmail = self.idText + "@gmail.com";
+                }
+                let fullPhone = "";
+                if (self.option == "010") {
+                    fullPhone = "010-" + self.phone1 + "-" + self.phone2;
+                } else if (self.option == "011") {
+                    fullPhone = "011-" + self.phone1 + "-" + self.phone2;
+                } else if (self.option == "017") {
+                    fullPhone = "017-" + self.phone1 + "-" + self.phone2;
+                }
+                let param = {
+                    careId: self.careId,
+                    pwd1: self.pwd1,
+                    ward: self.wardMap[self.wardNo],
+                    name: self.name,
+                    birth: self.birth,
+                    addr: self.addr,
+                    phone: fullPhone,
+                    email: fullEmail,
+                    gender: self.gender,
+                    wardNo: self.wardNo
+                };
+                console.log(self.email);
+                $.ajax({
+                    url: "http://localhost:3009/care/insert",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+                        alert("회원가입 되었습니다.");
+                        self.fnBack();
+                    }
+                });
+            },
+
+            fnBack: function () {
+                location.href = "Project_Login.html"
+            },
+
+            fnCheck: function () {
+                let self = this;
+                let param = {
+                    careId: self.careId
+                };
+                if (self.careId == 0) {
+                    alert("아이디는 공란이 될 수 없습니다.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "http://localhost:3009/care/searchId",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+                        console.log(data);
+                        if (data.length == 0) {
+                            alert("사용가능한 아이디 입니다.");
+                            self.checkFlg = true;
+                            return;
+                        } else {
+                            alert("이미 사용중인 아이디 입니다.");
+                        }
+                    }
+                });
+
+            },
+
+            fnCheck1: function () {
+                let self = this;
+                let fullPhone = "";
+                if (self.option == "010") {
+                    fullPhone = "010-" + self.phone1 + "-" + self.phone2;
+                } else if (self.option == "011") {
+                    fullPhone = "011-" + self.phone1 + "-" + self.phone2;
+                } else if (self.option == "017") {
+                    fullPhone = "017-" + self.phone1 + "-" + self.phone2;
+                }
+                let param = {
+                    phone: fullPhone
+                };
+                if (self.phone1 == 0 && self.phone2 == 0) {
+                    alert("휴대폰 번호는 공란이 될 수 없습니다.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "http://localhost:3009/care/searchPhone",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+                        console.log(data);
+                        if (data.length == 0) {
+                            alert("사용가능한 번호 입니다.");
+                            self.checkFlgPhone = true;
+                            return;
+                        } else {
+                            alert("이미 사용중인 번호 입니다.");
+                        }
+                    }
+                });
+
+            },
+
+            fnCheck2: function () {
+                let self = this;
+                let fullEmail = "";
+                if (self.email == "1") {
+                    fullEmail = self.idText;
+                } else if (self.email == "2") {
+                    fullEmail = self.idText + "@naver.com";
+                } else if (self.email == "3") {
+                    fullEmail = self.idText + "@nate.com";
+                } else if (self.email == "4") {
+                    fullEmail = self.idText + "@hanmail.net";
+                } else if (self.email == "5") {
+                    fullEmail = self.idText + "@gmail.com";
+                }
+                let param = {
+                    email: fullEmail
+                };
+                if (self.idText == 0) {
+                    alert("이메일는 공란이 될 수 없습니다.");
+                    return;
+                }
+                $.ajax({
+                    url: "http://localhost:3009/care/searchEmail",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+                        console.log(data);
+                        if (data.length == 0) {
+                            alert("사용가능한 이메일 입니다.");
+                            self.checkFlgEmail = true;
+                            return;
+                        } else {
+                            alert("이미 사용중인 이메일 입니다.");
+                        }
+                    }
+                });
+
+            }
+
+        }, // methods
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+            let self = this;
+
+        }
+    });
+
+    app.mount('#app');
+</script>

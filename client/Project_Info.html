@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+         body {
+            margin: 30px auto;
+            padding: 0;
+            background: #f7f9f8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        #app {
+            width: 500px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #fafafa;
+            color: #2e4d43;
+            font-weight: bold;
+        }
+
+        td {
+            color: #444;
+        }
+
+        tr:last-child th,
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #7fb5a8, #5d9f91);
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #6aa194, #4b877b);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <table>
+            <tr>
+                <th>아이디</th>
+                <td>{{info.USERID}}</td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td>{{info.NAME}}</td>
+            </tr>
+            <tr>
+                <th>생일</th>
+                <td>{{info.BIRTH}}</td>
+            </tr>
+            <tr>
+                <th>주소</th>
+                <td>{{info.ADDRESS}}</td>
+            </tr>
+            <tr>
+                <th>번호</th>
+                <td>{{info.PHONE}}</td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td>{{info.EMAIL}}</td>
+            </tr>
+            <tr>
+                <th>성별</th>
+                <td>{{info.GENDER}}</td>
+            </tr>
+            <tr>
+                <th>권한</th>
+                <td>
+                    <span v-if="info.STATUS === 'A'">관리자</span>
+                    <span v-else-if="info.STATUS === 'C'">보호자</span>
+                    <span v-else if="info.STATUS === 'S'">요양보호사</span>
+                    <span v-else>알수 없음.</span>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <button @click="fnClose()">닫기</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+                userId : "",
+                info: {}
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnInfo: function () {
+                let self = this;
+                let param = {
+                    userId: self.userId
+                };
+                $.ajax({
+                    url: "http://localhost:3009/user/info3",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+                        self.info = data.info;
+                        console.log(self.info);
+                    }
+                });
+            },
+            fnClose: function () {
+                window.close();
+            }
+        }, // methods
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+            let self = this;
+            const queryParams = new URLSearchParams(window.location.search);
+            self.userId = queryParams.get('userId') || '';
+
+            self.fnInfo();
+        }
+    });
+
+    app.mount('#app');
+</script>
