@@ -49,8 +49,9 @@
 
 ## ⭐ 메인페이지
 
-
-<img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage.png" width="285px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/login.png" width="285px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage2.png" width="225px">
+<div align="center">
+ <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage.png" width="285px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/login.png" width="285px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage2.png" width="225px">
+</div>
 
    + 로그인 화면은 가족과 요양 보호사 로그인을 다르게 만들어 쉽게 데이터 관리를 하고 가족과 요양보호사가 로그인시 서로 다른 기능을 할 수 있도록 만들었습니다.
     또한 로그인시에는 누가 로그인이 되었는지 확인할 수 있도록 제작되었습니다.
@@ -58,7 +59,9 @@
 
 ## 🌜 회원가입 페이지
 
-<img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/join.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/family.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/caregiver.png" width="320px" height="325px">
+<div align="center">
+ <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/join.png" width="340px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/family.png" width="227px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/caregiver.png" width="220px">
+</div>
 
    + 회원가입 또한도 가족과 요양보호사로 나뉘게 되었고, 모든 input 태그에는 공란이 있으면 안되며, 중복확인이 있어야만 가입이 가능하게 만들었습니다. 비밀번호는 정규식을 이용하여 영문+숫자+특수문자를 넣어야 진행이 가능하게 만들었습니다.
 
