@@ -79,7 +79,7 @@
 ## 🌝 게시판2
 
 <div align="center">
- <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/add_error.png" width="320px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_add.png" width="320px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_edit.png" width="320px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/user1.png" width="320px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/user2.png" width="313px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/admin_delete.png" width="327px"> 
+ <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/add_error.png" width="340px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_add.png" width="300px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_edit.png" width="310px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/user1.png" width="330px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/user2.png" width="313px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/admin_delete.png" width="327px"> 
 </div>
 
    + 로그인이 안되어 있을시에는 게시판에 글쓰기가 불가능하고, 로그인 후 글쓰기시 본인이 로그인한 이름으로 글이 추가가 됩니다. 또한 게시글을 삭제할 수 있는 조건은 로그인된 본인만 가능하며, 관리자 제외 모든 유저는 본인 게시글에 수정 or 삭제 버튼이 활성화 되어있습니다.
