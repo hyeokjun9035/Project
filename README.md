@@ -69,15 +69,18 @@
 
 
 ## 🌗 게시판1
-
-<img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_list.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/search.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/info.png" width="320px" height="325px">
+<div align="center">
+ <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board.png" width="310px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_list.png" width="432px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/search.png" width="371px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/info.png" width="371px">
+</div>
 
    + 여러 메뉴창을 통해 페이지 이동이 가능하고, 게시판 메뉴를 누를시 게시판 리스트로 이동을 합니다. 게시판 리스트 창에서 검색을 통해 원하는 리스트를 볼 수 있고, 관리자는 모든 회원의 정보를 확인할 수 있습니다.
 
 
 ## 🌝 게시판2
 
-<img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/add_error.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_add.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_edit.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/user1.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/user2.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/admin_delete.png" width="320px" height="325px"> 
+<div align="center">
+ <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/add_error.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_add.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/board_edit.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/user1.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/user2.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/admin_delete.png" width="320px" height="325px"> 
+</div>
 
    + 로그인이 안되어 있을시에는 게시판에 글쓰기가 불가능하고, 로그인 후 글쓰기시 본인이 로그인한 이름으로 글이 추가가 됩니다. 또한 게시글을 삭제할 수 있는 조건은 로그인된 본인만 가능하며, 관리자 제외 모든 유저는 본인 게시글에 수정 or 삭제 버튼이 활성화 되어있습니다.
 ---
