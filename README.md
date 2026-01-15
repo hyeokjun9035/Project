@@ -1,4 +1,6 @@
-![이미지네임](https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage.png)
+<div align="center">
+ <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage.png" width="500px">
+</div>
 
 # 📖 프로젝트 주제
 + 요양원 사이트 만들기
@@ -48,7 +50,7 @@
 ## ⭐ 메인페이지
 
 
-<img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/login.png" width="320px" height="325px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage2.png" width="320px" height="325px">
+<img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage.png" width="285px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/login.png" width="285px"> <img src="https://github.com/hyeokjun9035/JSP_project_img/blob/main/homepage2.png" width="225px">
 
    + 로그인 화면은 가족과 요양 보호사 로그인을 다르게 만들어 쉽게 데이터 관리를 하고 가족과 요양보호사가 로그인시 서로 다른 기능을 할 수 있도록 만들었습니다.
     또한 로그인시에는 누가 로그인이 되었는지 확인할 수 있도록 제작되었습니다.
